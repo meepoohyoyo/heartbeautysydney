@@ -48,7 +48,8 @@ class login extends CI_Controller
                          $sessiondata = array(
                               'username' => $username,
                               'loginuser' => TRUE,
-                              'CustomerID'=> $CustomerData->CustomerID
+                              'CustomerID'=> $CustomerData->CustomerID,
+                              'CustomerToken' => $CustomerData->token,
                          );
                          $this->session->set_userdata($sessiondata);
                          $this->session->set_userdata('cart_items', $this->Shoppingbag_model->get_user_unordered_cart_all($this->session->CustomerID));

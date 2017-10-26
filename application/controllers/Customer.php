@@ -118,7 +118,8 @@ class Customer extends CI_Controller
 		'MobilePhone' => $this->input->post('MobilePhone',TRUE),
 		'Email' => $this->input->post('Email',TRUE),
 		'Username' => $this->input->post('Username',TRUE),
-		'Password' => $this->input->post('Password',TRUE),
+        'Password' => $this->input->post('Password',TRUE),
+        'token'=> str_pad(rand(0, 99999999),8,"0",STR_PAD_LEFT)        
 	    );
 
             $this->Customer_model->insert($data);
@@ -141,7 +142,8 @@ class Customer extends CI_Controller
 		'MobilePhone' => $this->input->post('MobilePhone',TRUE),
 		'Email' => $this->input->post('Email',TRUE),
 		'Username' => $this->input->post('Username',TRUE),
-		'Password' => $this->input->post('Password',TRUE),
+        'Password' => $this->input->post('Password',TRUE),
+        'token'=> str_pad(rand(0, 99999999),8,"0",STR_PAD_LEFT)
 	    );
 
             $this->Customer_model->insert($data);

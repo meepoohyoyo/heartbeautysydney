@@ -9,6 +9,7 @@ class Payment extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Payment_model');
+        $this->load->model('Order_model');
         $this->load->library('form_validation');
     }
 
@@ -57,10 +58,12 @@ class Payment extends CI_Controller
 		'PhoneNum' => $row->PhoneNum,
 		'bank' => $row->bank,
         'ImagePath' => $row->ImagePath,
-	    );
-            $this->load->view('template/header');
-            $this->load->view('payment/payment_read', $data);
-            $this->load->view('template/footer');
+        );
+        
+        $this->load->view('template/header');
+        $this->load->view('payment/payment_read', $data);
+        $this->load->view('template/footer');
+
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('payment'));
@@ -72,14 +75,16 @@ class Payment extends CI_Controller
         $data = array(
             'button' => 'ยืนยัน',
             'action' => site_url('payment/create_action'),
-	    'PaymentID' => set_value('PaymentID'),
-	    'PaymentDate' => set_value('PaymentDate'),
-	    'TotalPrice' => set_value('TotalPrice'),
-	    'OrderID' => set_value('OrderID'),
-	    'PhoneNum' => set_value('PhoneNum'),
-	    'bank' => set_value('bank'),
-        'ImagePath' => set_value('ImagePath'),
-	);
+            'PaymentID' => set_value('PaymentID'),
+            'PaymentDate' => set_value('PaymentDate'),
+            'TotalPrice' => set_value('TotalPrice'),
+            'OrderID' => set_value('OrderID'),
+            'PhoneNum' => set_value('PhoneNum'),
+            'bank' => set_value('bank'),
+            'ImagePath' => set_value('ImagePath'),
+            'orders' => $this->Order_model->get_all_ordering_by_client($this->session->CustomerID)
+        );
+
         $this->load->view('template/header');
         $this->load->view('payment/clientpayment', $data);
         $this->load->view('template/footer');
@@ -102,8 +107,9 @@ class Payment extends CI_Controller
 	    );
 
             $this->Payment_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('payment'));
+            $this->session->set_flashdata('message', 'ยืนยันการแจ้งชำระเงินสำเร็จ');
+            $this->session->set_flashdata('success_message', 'ยืนยันการแจ้งชำระเงินสำเร็จ');
+            redirect(site_url('allorders'));
         }
     }
     

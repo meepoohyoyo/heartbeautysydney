@@ -100,6 +100,13 @@ class shoppingbagclient extends CI_Controller
             );
             $order = $this->Order_model->insert($data);
 
+            // update generate number
+            $id = $order->OrderID;
+            $generateNo = "TH01-" . str_pad($order->OrderID, 5, '0', STR_PAD_LEFT)
+            . "-" . $this->session->CustomerToken;
+            $data = array('GenerateNo' => $generateNo);
+            $this->Order_model->update($id, $data);
+
             $count = 0;
             foreach($this->input->post('ShoppingBagID') as $shoppingBagId){
                 $data = array(
@@ -113,10 +120,6 @@ class shoppingbagclient extends CI_Controller
             }
 
             $this->session->set_userdata('cart_items', 0);
-            
-            
-            $this->db->empty_table('shoppingbag');
-
 
             redirect(site_url('allorders'));
         }

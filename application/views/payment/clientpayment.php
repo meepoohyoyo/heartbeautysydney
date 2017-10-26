@@ -30,7 +30,7 @@
             <label for="char">เลขออเดอร์ <?php echo form_error('OrderID') ?></label>
              <select class="form-control" name="OrderID">
              <?php foreach($orders as $order){
-                 echo '<option value="'.$order->OrderID.'">'.$order->OrderID . ' ('.$order->OrderDate.')'.'</option>';
+                 echo '<option value="'.$order->OrderID.'">'.$order->GenerateNo .'</option>';
              } ?>
             </select>
             <!--<input type="text" class="form-control" name="OrderID" id="OrderID" placeholder="OrderID" value="<?php echo $OrderID; ?>" />-->

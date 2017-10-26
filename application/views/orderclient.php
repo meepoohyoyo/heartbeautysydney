@@ -13,7 +13,7 @@
     <tbody>
         <?php foreach($orders as $row){ ?>
         <tr>
-        <td><?php echo $row->OrderID; ?></td>
+        <td><?php echo $row->GenerateNo; ?></td>
         <td><?php echo $row->OrderDate; ?></td>
         <td><?php echo $row->OrderStatus; ?></td>
         </tr>

@@ -42,9 +42,6 @@
 
 <body>
 
-    
-
-
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: #FDB4BF; border-color: #EFA694;">
         <div class="container">
@@ -129,3 +126,12 @@
                     <a href="#" class="list-group-item">อาหารเสริม</a>
             </div>
     </div>
+
+    <?php if($this->session->userdata('success_message') <> ''){  ?>
+    <div class="row">
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <?php echo $this->session->userdata('success_message'); ?>
+        </div>
+    </div>
+    <?php } ?>
