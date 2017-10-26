@@ -24,7 +24,7 @@
                 </div>
     <!-- /.row -->
        
-       
+    
         <form action="<?php echo $action; ?>" method="post">
 	    <div class="form-group">
             <label for="char">เลขออเดอร์ <?php echo form_error('OrderID') ?></label>
