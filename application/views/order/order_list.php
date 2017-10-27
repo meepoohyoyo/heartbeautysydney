@@ -30,10 +30,12 @@
         </div>
         <table class="table table-bordered" style="margin-bottom: 10px">
             <tr>
-                <th>No</th>
+                <th>ID</th>
+		<th>หมายเลขออเดอร์</th>
 		<th>เวลาสั่งสินค้า</th>
-		<th>OrderStatus</th>
+		<th>สถานะ</th>
 		<th>รหัสลูกค้า</th>
+		<th>ยืนยันออเดอร์</th>
 		<th>Action</th>
             </tr><?php
             foreach ($order_data as $order)
@@ -41,9 +43,11 @@
                 ?>
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
+			<td><?php echo $order->GenerateNo ?></td>
 			<td><?php echo $order->OrderDate ?></td>
-			<td><?php echo $order->OrderStatus ?></td>
+			<td><?php echo getThaiOrder($order->OrderStatus) ?></td>
 			<td><?php echo $order->CustomerID ?></td>
+			<td><a href="#" class="btn btn-default">ยืนยันออเดอร์</a></td>
 			<td style="text-align:center" width="200px">
 				<?php 
 				echo anchor(site_url('order/read/'.$order->OrderID),'Read'); 

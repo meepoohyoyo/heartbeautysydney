@@ -41,6 +41,7 @@ class Payment extends CI_Controller
             'total_rows' => $config['total_rows'],
             'start' => $start,
         );
+
         $this->load->view('template/header');
         $this->load->view('payment/payment_list', $data);
         $this->load->view('template/footer');
@@ -107,6 +108,13 @@ class Payment extends CI_Controller
 	    );
 
             $this->Payment_model->insert($data);
+
+            // เปลี่ยนสถานะ order
+            $orderData = array(
+                'OrderStatus'=>'wait_confirm'
+            );
+            $this->Order_model->update($this->input->post('OrderID',TRUE), $orderData);
+
             $this->session->set_flashdata('message', 'ยืนยันการแจ้งชำระเงินสำเร็จ');
             $this->session->set_flashdata('success_message', 'ยืนยันการแจ้งชำระเงินสำเร็จ');
             redirect(site_url('allorders'));

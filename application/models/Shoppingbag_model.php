@@ -25,14 +25,18 @@ class Shoppingbag_model extends CI_Model
     function is_item_in_cart($ProductID, $CustomerID){
         $this->db->where('CustomerID', $CustomerID);
         $this->db->where('ProductID', $ProductID);
+        $this->db->where('OrderID IS NULL', null, false);
         $this->db->from($this->table);
+
         if($this->db->count_all_results()>0)
             return true;
+
         return false;
     }
 
     function get_user_cart_all($CustomerID){
         $this->db->where('CustomerID', $CustomerID);
+        $this->db->where('OrderID IS NULL', null, false);
         // $this->db->from($this->table);
         return $this->db->get($this->table)->result();
     }

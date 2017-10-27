@@ -15,7 +15,7 @@
         <tr>
         <td><?php echo $row->GenerateNo; ?></td>
         <td><?php echo $row->OrderDate; ?></td>
-        <td><?php echo $row->OrderStatus; ?></td>
+        <td><?php echo getThaiOrder($row->OrderStatus); ?></td>
         </tr>
        <?php } ?>
     </tbody>

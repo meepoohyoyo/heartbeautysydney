@@ -66,6 +66,8 @@
                                 <?php 
                                 if(isset($_SESSION['cart_items'])){
                                     echo $_SESSION['cart_items'];
+                                }else{
+                                    echo "0";
                                 }
                                  ?></a>
                             </li>
