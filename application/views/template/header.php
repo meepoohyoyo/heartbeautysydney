@@ -43,8 +43,8 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: #FDB4BF; border-color: #EFA694;">
-        <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="first-navbar">
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -53,29 +53,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-               
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-lef">
+                <ul class="nav navbar-nav navbar-left">
                     <li><a href="<?php echo site_url('/'); ?>" style="margin-top:-5px;"><i class="fa fa-home" style="font-size: 2em;" aria-hidden="true"></i> </a></li>
                 </ul>
                 <ul class="nav navbar-nav  navbar-right" >
                     <li>
-                                <a href="<?php echo site_url('shoppingbagclient'); ?>"><i class="fa fa-shopping-basket"></i>
-                                <?php 
+                        <a href="<?php echo site_url('shoppingbagclient'); ?>"><i class="fa fa-shopping-basket"></i>
+                            <?php 
                                 if(isset($_SESSION['cart_items'])){
                                     echo $_SESSION['cart_items'];
                                 }else{
                                     echo "0";
                                 }
-                                 ?></a>
-                            </li>
+                            ?>
+                        </a>
+                    </li>
                     <?php if(isset($_SESSION['username'])){ ?> 
-                                        <li>
+                    <li>
                         <a href="<?php echo site_url('/clientpayment');?>">แจ้งชำระเงิน </a>
                     </li>
-                                        <li>
+                    <li>
                         <a href="<?php echo site_url('/allorders');?>">ดูออเดอร์ </a>
                     </li>
                         <li class="dropdown">
@@ -101,20 +101,49 @@
                         </li>              
                     <?php            }else{ ?>
                         <li>
-                            <a href="<?php echo site_url('/login'); ?>">เข้าสู่ระบบ </a>
+                            <a href="<?php echo site_url('/login'); ?>">เข้าสู่ระบบ/ลงทะเบียนใหม่</a>
                         </li>  
-                     <?php } ?>
+                    <?php } ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>    
-
-    
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="second-navbar">
+        <div class="container-fluid">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a href="<?php echo site_url('/home/page');?>">สกินแคร์</a>
+                    </li>
+                    <li>
+                        <a href="#">ผิวกาย</a>
+                    </li>
+                    <li>
+                        <a href="#">อาหารเสริม</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="form-inline" id="navbar-search">
+                            <input class="form-control" type="search" placeholder="ค้นหาสินค้า" aria-label="Search"> 
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </form>
+                    </li>
+                    
+                </ul>
+                
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
     <!-- Page Content -->
-    <div class="container">
+    <!-- <div class="container">
 
         <div class="row">
 
@@ -127,7 +156,7 @@
             <div class="col-md-4">
                     <a href="#" class="list-group-item">อาหารเสริม</a>
             </div>
-    </div>
+    </div> -->
 
     <?php if($this->session->userdata('success_message') <> ''){  ?>
     <div class="row">

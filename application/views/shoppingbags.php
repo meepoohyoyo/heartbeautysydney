@@ -1,5 +1,5 @@
 <div>
-  <img src="assets/img/shop_m02.png">
+  <img src="assets/img/shop_b.png">
 </div>
 <div class="table-responsive">
     <table class="table">
