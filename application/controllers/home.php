@@ -26,5 +26,24 @@ class home extends CI_Controller {
 		$this->load->view('template/footer');
 	}
 
-	
+	public function skincare()
+	{
+		$this->load->view('template/header');
+		$this->load->view('skincare');
+		$this->load->view('template/footer');
+	}
+
+	public function supplementary()
+	{
+		$this->load->view('template/header');
+		$this->load->view('supplementary');
+		$this->load->view('template/footer');
+	}
+
+	public function body()
+	{
+		$this->load->view('template/header');
+		$this->load->view('body');
+		$this->load->view('template/footer');
+	}
 }

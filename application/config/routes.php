@@ -17,6 +17,10 @@ $route['add-to-cart/(:num)'] = 'Product/add_to_cart/$1';
 $route['bagdelete/(:num)'] = 'shoppingbagclient/bagdelete/$1';
 $route['allorders'] = 'shoppingbagclient/order_all';
 $route['submitbag'] = 'shoppingbagclient/submitbag';
+$route['skincare'] = 'home/skincare';
+$route['supplementary'] = 'home/supplementary';
+$route['body'] = 'home/body';
+$route['user/info'] = 'Customer/getUserInfo';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

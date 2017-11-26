@@ -63,7 +63,7 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li id="products-group">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> สินค้า<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
@@ -83,7 +83,7 @@
                     <li>
                         <a href="<?php echo site_url('promotion');?>"><i class="fa fa-fw fa-line-chart"></i> โปรโมชั่น</a>
                     </li>
-                    <li>
+                    <li id="statistic-group">
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-pie-chart"></i> สถิติร้านค้า<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
@@ -97,7 +97,6 @@
                             </li>
                         </ul>
                     </li>
-                
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

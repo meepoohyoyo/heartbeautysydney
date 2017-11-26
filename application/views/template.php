@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="partition-header">
-                <h2 class="text-center uppercase">Products</h2>
+                <h1 class="text-center uppercase">สินค้าใหม่</h1>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                         <div class="thumbnail">
                             <img style="min-height:200px; height:200px;" src="assets/img/'.$row->ImagePath.'" alt="">
                             <div class="caption">
-                                <h4 class="pull-right">'.$row->ProductPrice.'</h4>
+                                <h4 class="pull-right text-bold">'.$row->ProductPrice.'</h4>
                                 <h4><a href="'.site_url("detail")."/".$row->ProductID.'">'.$row->ProductName.'</a></h4>
                                 <p>'.$row->ProductDetail.'</p>
                             </div>
@@ -102,7 +102,7 @@
                         <div class="thumbnail">
                             <img style="min-height:200px; height:200px;" src="assets/img/'.$row->ImagePath.'" alt="">
                             <div class="caption">
-                                <h4 class="pull-right">'.$row->ProductPrice.'</h4>
+                                <h4 class="pull-right text-bold">'.$row->ProductPrice.'</h4>
                                 <h4><a href="'.site_url("detail")."/".$row->ProductID.'">'.$row->ProductName.'</a></h4>
                                 <p>'.$row->ProductDetail.'</p>
                             </div>
@@ -117,7 +117,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="partition-header">
-                <h2 class="text-center text-uppercase">Promotions</h2>
+                <h1 class="text-center text-uppercase">PROMOTION</h1>
             </div>
         </div>
     </div>

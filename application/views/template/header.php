@@ -91,7 +91,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="#"><i class="fa fa-fw fa-user"></i>ข้อมูลส่วนตัว</a>
+                                    <a href="<?php echo site_url('/user/info');?>"><i class="fa fa-fw fa-user"></i>ข้อมูลส่วนตัว</a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
@@ -117,13 +117,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a href="<?php echo site_url('/home/page');?>">สกินแคร์</a>
+                        <a href="<?php echo site_url('/skincare');?>">+สกินแคร์</a>
                     </li>
                     <li>
-                        <a href="#">ผิวกาย</a>
+                        <a href="<?php echo site_url('/supplementary');?>">+ผิวกาย</a>
                     </li>
                     <li>
-                        <a href="#">อาหารเสริม</a>
+                        <a href="<?php echo site_url('/body');?>">+อาหารเสริม</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

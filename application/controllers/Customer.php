@@ -66,6 +66,24 @@ class Customer extends CI_Controller
         }
     }
 
+    public function getUserInfo(){
+        $row = $this->Customer_model->get_by_id($_SESSION['CustomerID']);
+        $data = array(
+            'CustomerID' => $row->CustomerID,
+            'Firstname' => $row->Firstname,
+            'Lastname' => $row->Lastname,
+            'Address' => $row->Address,
+            'MobilePhone' => $row->MobilePhone,
+            'Email' => $row->Email,
+            'Username' => $row->Username,
+            'Password' => $row->Password,
+            );
+
+        $this->load->view('template/header');
+        $this->load->view('customer/clientcustomer', $data);
+        $this->load->view('template/footer');
+    }
+
     public function createuser()
     {
         $data = array(

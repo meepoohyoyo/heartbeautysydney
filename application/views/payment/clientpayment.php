@@ -1,12 +1,8 @@
 <style> 
        
-        form{
-            padding-left: 5%;
-            padding-right: 5%;
-        }
-
+       
         .page-header{
-            padding-left: 5%;
+            text-align: center;
         }
 
         .table1{
@@ -14,6 +10,7 @@
         }
 </style>
   
+  <div class="container content-container">
    <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -24,7 +21,6 @@
                 </div>
     <!-- /.row -->
        
-    
         <form action="<?php echo $action; ?>" method="post">
 	    <div class="form-group">
             <label for="char">เลขออเดอร์ <?php echo form_error('OrderID') ?></label>
@@ -72,12 +68,14 @@
        <div class="form-group">
          <label for="varchar">ใบบันทึกรายการ <?php echo form_error('ImagePath') ?></label>
             <br>
-            <div class="fileUpload btn btn-primary">
+            <div class="fileUpload btn btn-custom-histle">
                 <input type="file" class="upload" name="ImagePath"/>
             </div>
         </div>
 
 	    <input type="hidden" name="PaymentID" value="<?php echo $PaymentID; ?>" /> 
-	    <button type="submit" class="btn btn-primary pull-right"><?php echo $button ?></button> 
-	</form>
+        <button type="submit" class="btn btn-custom-histle mb-10 pull-right"><?php echo $button ?></button> 
+        <button type="button" class="btn btn-custom-cancel mb-10 pull-right mr-10">ยกเลิก</button> 
+    </form>
+</div>
    
