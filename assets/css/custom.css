@@ -126,5 +126,12 @@ nav#second-navbar .container-fluid{
      color:#777;
 }
 
+.admin-container {
+    width: auto;
+    padding-top:10px;
+    padding-bottom:10px; 
+
+}
+
 
 

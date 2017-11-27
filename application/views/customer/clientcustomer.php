@@ -1,6 +1,5 @@
 <div class="container content-container">
 
-	<h2 style="margin-top:0px">Customer Read</h2>
         <table class="table">
 			<tr><td>ชื่อ</td><td><?php echo $Firstname; ?></td></tr>
 			<tr><td>นามสกุล</td><td><?php echo $Lastname; ?></td></tr>

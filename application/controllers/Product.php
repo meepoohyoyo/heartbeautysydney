@@ -13,6 +13,7 @@ class Product extends CI_Controller
         $this->load->model('Producttype_model');
         $this->load->model('Shoppingbag_model');
         $this->load->library('form_validation');
+        $this->load->library('upload');
     }
 
     public function index()
@@ -125,16 +126,58 @@ class Product extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
-            $data = array(
-		'ProductName' => $this->input->post('ProductName',TRUE),
-		'ProductPrice' => $this->input->post('ProductPrice',TRUE),
-		'ImagePath' => $this->input->post('ImagePath',TRUE),
-		'ProductDetail' => $this->input->post('ProductDetail',TRUE),
-		'Cost' => $this->input->post('Cost',TRUE),
-		'TypeID' => $this->input->post('TypeID',TRUE),
-	    );
 
-            $this->Product_model->insert($data);
+            if (!empty($_FILES['ImagePath']['name'])) {
+                // upload
+                $config['upload_path']          = realpath(dirname(__FILE__)) .'\..\..\assets\img';
+                $config['max_size']             = 0;
+                $config['allowed_types'] = 'gif|jpg|png';
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ( ! $this->upload->do_upload('ImagePath'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+                        var_dump($this->upload->display_errors());
+                        die();
+                }
+                $data = array(
+                    'ProductName' => $this->input->post('ProductName',TRUE),
+                    'ProductPrice' => $this->input->post('ProductPrice',TRUE),
+                    'ImagePath' => $this->upload->data('file_name'),
+                    'ProductDetail' => $this->input->post('ProductDetail',TRUE),
+                    'Cost' => $this->input->post('Cost',TRUE),
+                    'TypeID' => $this->input->post('TypeID',TRUE),
+                    );
+
+                $this->Product_model->insert($data);
+
+                $config['image_library'] = 'gd2';
+                $config['source_image'] =  $this->upload->data('full_path');
+                $config['maintain_ratio'] = TRUE;
+                $config['width']         = 450;
+                $config['height']       = 450;
+
+                $this->load->library('image_lib', $config);
+
+                if ( ! $this->image_lib->resize())
+                {
+                    var_dump($this->image_lib->display_errors());
+                }
+            }else{
+                $data = array(
+                    'ProductName' => $this->input->post('ProductName',TRUE),
+                    'ProductPrice' => $this->input->post('ProductPrice',TRUE),
+                    'ImagePath' => "",
+                    'ProductDetail' => $this->input->post('ProductDetail',TRUE),
+                    'Cost' => $this->input->post('Cost',TRUE),
+                    'TypeID' => $this->input->post('TypeID',TRUE),
+                    );
+
+                $this->Product_model->insert($data);
+            }
+
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('product'));
         }
@@ -175,16 +218,59 @@ class Product extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('ProductID', TRUE));
         } else {
-            $data = array(
-		'ProductName' => $this->input->post('ProductName',TRUE),
-		'ProductPrice' => $this->input->post('ProductPrice',TRUE),
-		'ImagePath' => $this->input->post('ImagePath',TRUE),
-		'ProductDetail' => $this->input->post('ProductDetail',TRUE),
-		'Cost' => $this->input->post('Cost',TRUE),
-		'TypeID' => $this->input->post('TypeID',TRUE),
-	    );
 
-            $this->Product_model->update($this->input->post('ProductID', TRUE), $data);
+            if (!empty($_FILES['ImagePath']['name'])){
+                // upload
+                $config['upload_path']          = realpath(dirname(__FILE__)) .'\..\..\assets\img';
+                $config['max_size']             = 0;
+                $config['allowed_types'] = 'gif|jpg|png';
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ( ! $this->upload->do_upload('ImagePath'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+                        var_dump($this->upload->display_errors());
+                        die();
+                }else{
+                    $config['image_library'] = 'gd2';
+                    $config['source_image'] =  $this->upload->data('full_path');
+                    $config['maintain_ratio'] = TRUE;
+                    $config['width']         = 450;
+                    $config['height']       = 450;
+                    
+                    $this->load->library('image_lib', $config);
+                    
+                    if ( ! $this->image_lib->resize())
+                    {
+                        var_dump($this->image_lib->display_errors());
+                    }
+                }
+
+                $data = array(
+                    'ProductName' => $this->input->post('ProductName',TRUE),
+                    'ProductPrice' => $this->input->post('ProductPrice',TRUE),
+                    'ImagePath' => $this->upload->data('file_name'),
+                    'ProductDetail' => $this->input->post('ProductDetail',TRUE),
+                    'Cost' => $this->input->post('Cost',TRUE),
+                    'TypeID' => $this->input->post('TypeID',TRUE),
+                    );
+
+                $this->Product_model->update($this->input->post('ProductID', TRUE), $data);
+            }else{
+                $data = array(
+                    'ProductName' => $this->input->post('ProductName',TRUE),
+                    'ProductPrice' => $this->input->post('ProductPrice',TRUE),
+                    'ProductDetail' => $this->input->post('ProductDetail',TRUE),
+                    'Cost' => $this->input->post('Cost',TRUE),
+                    'TypeID' => $this->input->post('TypeID',TRUE),
+                    );
+
+                $this->Product_model->update($this->input->post('ProductID', TRUE), $data);
+            }
+    
+
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('product'));
         }
@@ -208,7 +294,6 @@ class Product extends CI_Controller
     {
 	$this->form_validation->set_rules('ProductName', 'productname', 'trim|required');
 	$this->form_validation->set_rules('ProductPrice', 'productprice', 'trim|required');
-	$this->form_validation->set_rules('ImagePath', 'imagepath', 'trim|required');
 	$this->form_validation->set_rules('ProductDetail', 'productdetail', 'trim|required');
 	$this->form_validation->set_rules('Cost', 'cost', 'trim|required');
 	$this->form_validation->set_rules('TypeID', 'typeid', 'trim|required');

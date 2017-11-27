@@ -60,7 +60,7 @@
                         </div>
                     </div>";
             } */
-        $query = $this->db->query("SELECT * FROM product;");
+        $query = $this->db->query("SELECT * FROM product order by ProductID desc LIMIT 8;");
             foreach ($query->result() as $row)
                 {
                     echo '<div class="col-sm-3 col-lg-3 col-md-3 product-list">
@@ -68,7 +68,7 @@
                             <img style="min-height:200px; height:200px;" src="assets/img/'.$row->ImagePath.'" alt="">
                             <div class="caption">
                                 <h4 class="pull-right text-bold">'.$row->ProductPrice.'</h4>
-                                <h4><a href="'.site_url("detail")."/".$row->ProductID.'">'.$row->ProductName.'</a></h4>
+                                <h4><a href="'.site_url("detail")."/".$row->ProductID.'">'.substr($row->ProductName, 0,17).'</a></h4>
                                 <p>'.$row->ProductDetail.'</p>
                             </div>
                             <div class="row">
@@ -79,41 +79,7 @@
                 }
         ?> 
     </div>
-    <div class="row">
-        <?php
-            /* for($i=0;$i<9;$i++)
-            {
-                echo "<div class='col-sm-4 col-lg-4 col-md-4'>
-                        <div class='thumbnail'>
-                            <img src='http://www.konvy.com/static/team/2016/0330/14593278748288.jpg' alt=''>
-                            <div class='caption'>
-                                <h4 class='pull-right'>฿259</h4>
-                                <h4><a href='#'>Eglips Blur Powder Pact 9g #23</a>
-                                </h4>
-                            </div>
-                            <img src='assets/img/bt_buynow.png' alt='buy'>
-                        </div>
-                    </div>";
-            } */
-        $query = $this->db->query("SELECT * FROM product;");
-            foreach ($query->result() as $row)
-                {
-                    echo '<div class="col-sm-3 col-lg-3 col-md-3 product-list">
-                        <div class="thumbnail">
-                            <img style="min-height:200px; height:200px;" src="assets/img/'.$row->ImagePath.'" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right text-bold">'.$row->ProductPrice.'</h4>
-                                <h4><a href="'.site_url("detail")."/".$row->ProductID.'">'.$row->ProductName.'</a></h4>
-                                <p>'.$row->ProductDetail.'</p>
-                            </div>
-                            <div class="row">
-                                <a href="add-to-cart/'.$row->ProductID.'" class="btn btn-custom-pink pull-right">ซื้อเลย</a>
-                            </div>
-                        </div>
-                    </div>';
-                }
-        ?> 
-    </div>
+    
     <div class="row">
         <div class="col-md-12">
             <div class="partition-header">

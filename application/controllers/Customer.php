@@ -58,8 +58,11 @@ class Customer extends CI_Controller
 		'Email' => $row->Email,
 		'Username' => $row->Username,
 		'Password' => $row->Password,
-	    );
+        );
+            $this->load->view('admin/header');        
             $this->load->view('customer/customer_read', $data);
+        $this->load->view('admin/footer');
+        
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('customer'));

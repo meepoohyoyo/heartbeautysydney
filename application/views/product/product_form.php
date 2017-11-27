@@ -1,6 +1,6 @@
-
+<div class="container admin-container">
         <h2 style="margin-top:0px">เพิ่มสินค้า </h2>
-        <form action="<?php echo $action; ?>" method="post">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 	    <div class="form-group">
             <label for="varchar">ชื่อสินค้า <?php echo form_error('ProductName') ?></label>
             <input type="text" class="form-control" name="ProductName" id="ProductName" placeholder="ProductName" value="<?php echo $ProductName; ?>" />
@@ -35,6 +35,7 @@
             </select>
         </div>
 	    <input type="hidden" name="ProductID" value="<?php echo $ProductID; ?>" /> 
-	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
+	    <button type="submit" class="btn btn-custom-histle"><?php echo $button ?></button> 
 	    <a href="<?php echo site_url('product') ?>" class="btn btn-default">Cancel</a>
-	</form>
+    </form>
+</div>

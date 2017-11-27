@@ -1,6 +1,4 @@
-<div class="container content-container">
-
-	<h2>Customer Read</h2>
+<div class="container admin-container">
         <table class="table">
 			<tr><td>ชื่อ</td><td><?php echo $Firstname; ?></td></tr>
 			<tr><td>นามสกุล</td><td><?php echo $Lastname; ?></td></tr>
