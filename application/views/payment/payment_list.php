@@ -1,21 +1,7 @@
-<!doctype html>
-<html>
-    <head>
-        <title>harviacode.com - codeigniter crud generator</title>
-        <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
-        <style>
-            body{
-                padding: 15px;
-            }
-        </style>
-    </head>
-    <body>
-        <h2 style="margin-top:0px">Payment List</h2>
+
+        <h2 style="margin-top:0px">การชำระเงิน</h2>
         <div class="row" style="margin-bottom: 10px">
-            <div class="col-md-4">
-                <?php echo anchor(site_url('payment/create'),'Create', 'class="btn btn-primary"'); ?>
-            </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-8 text-center">
                 <div style="margin-top: 8px" id="message">
                     <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
                 </div>
@@ -44,13 +30,14 @@
         <table class="table table-bordered" style="margin-bottom: 10px">
             <tr>
                 <th>No</th>
-		<th>PaymentDate</th>
-		<th>TotalPrice</th>
+		<th>วัน-เวลาการจ่ายเงิน</th>
+		<th>ราคารวมสินค้า</th>
 		<th>OrderID</th>
-		<th>PhoneNum</th>
-		<th>Bank</th>
-		<th>ImagePath</th>
-		<th>Action</th>
+		<th>หมายเลขโทรศัทพ์</th>
+		<th>ธนาคาร</th>
+		<th>รูปภาพ</th>
+        <th>ยืนยันออเดอร์</th>
+        <th>ลบ</th>
             </tr><?php
             foreach ($payment_data as $payment)
             {
@@ -63,15 +50,12 @@
 			<td><?php echo $payment->PhoneNum ?></td>
 			<td><?php echo $payment->bank ?></td>
 			<td><?php echo $payment->ImagePath ?></td>
-			<td style="text-align:center" width="200px">
-				<?php 
-				echo anchor(site_url('payment/read/'.$payment->PaymentID),'Read'); 
-				echo ' | '; 
-				echo anchor(site_url('payment/update/'.$payment->PaymentID),'Update'); 
-				echo ' | '; 
-				echo anchor(site_url('payment/delete/'.$payment->PaymentID),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-				?>
-			</td>
+			<td >
+                <a href="#" class="btn btn-default">ยืนยันออเดอร์</a>
+            </td>
+            <td>
+                <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("payment/delete/").$payment->PaymentID; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            </td>
 		</tr>
                 <?php
             }
@@ -85,5 +69,4 @@
                 <?php echo $pagination ?>
             </div>
         </div>
-    </body>
-</html>
+        

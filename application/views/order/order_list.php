@@ -35,9 +35,11 @@
 		<th>เวลาสั่งสินค้า</th>
 		<th>สถานะ</th>
 		<th>รหัสลูกค้า</th>
-		<th>ยืนยันออเดอร์</th>
-		<th>Action</th>
-            </tr><?php
+        <th>ยืนยันออเดอร์</th>
+        <th>ยืนยันการจัดส่ง</th>
+		<th>ลบ</th>
+            </tr>
+            <?php
             foreach ($order_data as $order)
             {
                 ?>
@@ -47,15 +49,10 @@
 			<td><?php echo $order->OrderDate ?></td>
 			<td><?php echo getThaiOrder($order->OrderStatus) ?></td>
 			<td><?php echo $order->CustomerID ?></td>
-			<td><a href="#" class="btn btn-default">ยืนยันออเดอร์</a></td>
-			<td style="text-align:center" width="200px">
-				<?php 
-				echo anchor(site_url('order/read/'.$order->OrderID),'Read'); 
-				echo ' | '; 
-				echo anchor(site_url('order/update/'.$order->OrderID),'Update'); 
-				echo ' | '; 
-				echo anchor(site_url('order/delete/'.$order->OrderID),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-				?>
+            <td><a href="#" class="btn btn-default">ยืนยันออเดอร์</a></td>
+            <td><a href="#" class="btn btn-default">ยืนยันจัดส่ง</a></td>
+			<td>
+                <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("order/delete").$order->OrderID; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 			</td>
 		</tr>
                 <?php
@@ -65,9 +62,5 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="#" class="btn btn-primary">Total Record : <?php echo $total_rows ?></a>
-	    </div>
-            <div class="col-md-6 text-right">
-                <?php echo $pagination ?>
-            </div>
-        </div>
+	    
     

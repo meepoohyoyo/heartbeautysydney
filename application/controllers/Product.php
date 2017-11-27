@@ -91,7 +91,9 @@ class Product extends CI_Controller
 		'Cost' => $row->Cost,
 		'TypeID' => $row->TypeID,
 	    );
+            $this->load->view('admin/header');
             $this->load->view('product/product_read', $data);
+            $this->load->view('admin/footer');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('product'));

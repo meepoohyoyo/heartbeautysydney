@@ -57,9 +57,12 @@ class Promotion extends CI_Controller
 		'PromotionName' => $row->PromotionName,
 		'UnitOfDiscount' => $row->UnitOfDiscount,
 		'TypePromotion' => $row->TypePromotion,
-		'Value' => $row->Value,
-	    );
+        'Value' => $row->Value,
+        'ImagePath' => $row->ImagePath,
+        );
+            $this->load->view('admin/header');
             $this->load->view('promotion/promotion_read', $data);
+            $this->load->view('admin/footer');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('promotion'));
@@ -78,7 +81,8 @@ class Promotion extends CI_Controller
 	    'PromotionName' => set_value('PromotionName'),
 	    'UnitOfDiscount' => set_value('UnitOfDiscount'),
 	    'TypePromotion' => set_value('TypePromotion'),
-	    'Value' => set_value('Value'),
+        'Value' => set_value('Value'),
+        'ImagePath' => set_value('ImagePath'),
 	);
         $this->load->view('admin/header');
         $this->load->view('promotion/promotion_form', $data);
@@ -99,7 +103,9 @@ class Promotion extends CI_Controller
 		'PromotionName' => $this->input->post('PromotionName',TRUE),
 		'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
 		'TypePromotion' => $this->input->post('TypePromotion',TRUE),
-		'Value' => $this->input->post('Value',TRUE),
+        'Value' => $this->input->post('Value',TRUE),
+        'ImagePath' => $this->upload->data('file_name'),
+        
 	    );
 
             $this->Promotion_model->insert($data);
@@ -123,7 +129,8 @@ class Promotion extends CI_Controller
 		'PromotionName' => set_value('PromotionName', $row->PromotionName),
 		'UnitOfDiscount' => set_value('UnitOfDiscount', $row->UnitOfDiscount),
 		'TypePromotion' => set_value('TypePromotion', $row->TypePromotion),
-		'Value' => set_value('Value', $row->Value),
+        'Value' => set_value('Value', $row->Value),
+        'ImagePath' => set_value('ImagePath', $row->ImagePath),
 	    );
             $this->load->view('admin/header');
             $this->load->view('promotion/promotion_form', $data);
@@ -149,7 +156,8 @@ class Promotion extends CI_Controller
 		'PromotionName' => $this->input->post('PromotionName',TRUE),
 		'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
 		'TypePromotion' => $this->input->post('TypePromotion',TRUE),
-		'Value' => $this->input->post('Value',TRUE),
+        'Value' => $this->input->post('Value',TRUE),
+        'ImagePath' => $this->upload->data('file_name'),
 	    );
 
             $this->Promotion_model->update($this->input->post('PromotionID', TRUE), $data);

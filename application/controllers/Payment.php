@@ -42,9 +42,9 @@ class Payment extends CI_Controller
             'start' => $start,
         );
 
-        $this->load->view('template/header');
+        $this->load->view('admin/header');
         $this->load->view('payment/payment_list', $data);
-        $this->load->view('template/footer');
+        $this->load->view('admin/footer');
     }
 
     public function read($id) 
@@ -61,9 +61,9 @@ class Payment extends CI_Controller
         'ImagePath' => $row->ImagePath,
         );
         
-        $this->load->view('template/header');
+        $this->load->view('admin/header');
         $this->load->view('payment/payment_read', $data);
-        $this->load->view('template/footer');
+        $this->load->view('admin/footer');
 
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -85,7 +85,7 @@ class Payment extends CI_Controller
             'ImagePath' => set_value('ImagePath'),
             'orders' => $this->Order_model->get_all_ordering_by_client($this->session->CustomerID)
         );
-
+        
         $this->load->view('template/header');
         $this->load->view('payment/clientpayment', $data);
         $this->load->view('template/footer');
