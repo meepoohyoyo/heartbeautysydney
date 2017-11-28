@@ -21,6 +21,9 @@ $route['skincare'] = 'home/skincare';
 $route['supplementary'] = 'home/supplementary';
 $route['body'] = 'home/body';
 $route['user/info'] = 'Customer/getUserInfo';
+$route['report/sale'] = 'admin/getSaleReport';
+$route['report/best-sale'] = 'admin/getBestSaleReport';
+$route['report/payment'] = 'admin/getPaymentReport';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

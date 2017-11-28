@@ -17,7 +17,8 @@
 
     <!-- Custom CSS -->
     <link href="<?php echo base_url('assets/css/sb-admin.css');?>" rel="stylesheet">
-
+    <link href="<?php echo base_url('assets/datatables/datatables.min.css');?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/css/font-awesome.min.css');?>" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="<?php echo base_url('assets/css/plugins/morris.css');?>" rel="stylesheet">
 
@@ -87,13 +88,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-pie-chart"></i> สถิติร้านค้า<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo1" class="collapse">
                             <li>
-                                <a href="<?php echo site_url('report');?>">การขาย</a>
+                                <a href="<?php echo site_url('report/sale');?>">การขาย</a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url('report');?>">สินค้าขายดี</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('report');?>">การชำระเงิน</a>
+                                <a href="<?php echo site_url('report/payment');?>">การชำระเงิน</a>
                             </li>
                         </ul>
                     </li>

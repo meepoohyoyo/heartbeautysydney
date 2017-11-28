@@ -32,10 +32,73 @@ class admin extends CI_Controller {
 
 	}
 
-	public function report()
+	public function getSaleReport()
 	{
+		$data = array(
+			'report'=>'sale', 
+			'results'=>array() );
+
+		$fromDate = $this->input->post('from_date');
+		$toDate = $this->input->post('to_date');
+		if($fromDate && $toDate){
+			$sql = "select `order`.`OrderID`,`order`.`OrderDate` , 
+			CONCAT( customer.Firstname , ' ',customer.Lastname) as CustomerName 
+			, `order`.`OrderStatus` , SUM(shoppingbag.totalprice) as SumTotal 
+			from `order` 
+			left join customer on `order`.`CustomerID`=customer.CustomerID 
+			left join shoppingbag on `order`.`OrderID`=shoppingbag.OrderID 
+			where `order`.`OrderDate` between ? and ?
+			group by `order`.`OrderID`, `order`.`OrderDate`,customer.Firstname
+			, customer.Lastname,`order`.`OrderStatus`";
+
+			$query = $this->db->query($sql, array($fromDate, $toDate) );
+			$data['results'] = $query->result();
+			$data['fromDate'] =$fromDate;
+			$data['toDate']=$toDate;
+		
+		}
+
 		$this->load->view('admin/header');
-		$this->load->view('admin/report');
+		$this->load->view('admin/ReportSale', $data);
+		$this->load->view('admin/footer');
+	}
+
+	public function getBestSaleReport(){
+		$data = array('report'=>'best-sale');
+		
+		$this->load->view('admin/header');
+		$this->load->view('admin/ReportBestSeller', $data);
+		$this->load->view('admin/footer');
+
+	}
+
+	public function getPaymentReport(){
+		$data = array(
+			'report'=>'payment', 
+			'results'=>array() );
+
+		$fromDate = $this->input->post('from_date');
+		$toDate = $this->input->post('to_date');
+		if($fromDate && $toDate){
+			$sql = "select `order`.`OrderID`,`order`.`OrderDate` , 
+			CONCAT( customer.Firstname , ' ',customer.Lastname) as CustomerName 
+			, `order`.`OrderStatus` , SUM(shoppingbag.totalprice) as SumTotal 
+			from `order` 
+			left join customer on `order`.`CustomerID`=customer.CustomerID 
+			left join shoppingbag on `order`.`OrderID`=shoppingbag.OrderID 
+			where `order`.`OrderDate` between ? and ? and `order`.OrderStatus = 'confirm'
+			group by `order`.`OrderID`, `order`.`OrderDate`,customer.Firstname
+			, customer.Lastname,`order`.`OrderStatus`";
+
+			$query = $this->db->query($sql, array($fromDate, $toDate) );
+			$data['results'] = $query->result();
+			$data['fromDate'] =$fromDate;
+			$data['toDate']=$toDate;
+		
+		}
+		
+		$this->load->view('admin/header');
+		$this->load->view('admin/ReportPayment', $data);
 		$this->load->view('admin/footer');
 	}
 
