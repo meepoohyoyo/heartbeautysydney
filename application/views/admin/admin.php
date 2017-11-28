@@ -71,7 +71,7 @@
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
+                                    <table class="table table-bordered table-hover table-striped" id="index-table">
                                         <thead>
                                             <tr>
                                                 <th>เลขที่ออเดอร์</th>

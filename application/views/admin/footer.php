@@ -16,6 +16,11 @@
     <script src="<?php echo base_url('assets/js/custom.js');?>"></script>
     <!-- Morris Charts JavaScript -->
     <script src="<?php echo base_url('assets/js/plugins/morris/raphael.min.js');?>"></script>
+    <script>
+    $(function(){
+        $('#index-table').DataTable();
+    })
+    </script>
     <?php 
     if(isset($report)){
     ?>
