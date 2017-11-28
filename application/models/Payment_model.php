@@ -56,6 +56,43 @@ class Payment_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
+        // get data with limit and search
+        function get_limit_data_wait_confirm($limit, $start = 0, $q = NULL) {
+
+            $this->db->join('order', 'order.OrderID = payment.OrderID');            
+            $this->db->order_by($this->id, $this->order);
+            $this->db->where('OrderStatus', 'wait_confirm');            
+            $this->db->group_start();
+            $this->db->like('PaymentID', $q);
+            $this->db->or_like('PaymentDate', $q);
+            $this->db->or_like('TotalPrice', $q);
+            $this->db->or_like('payment.OrderID', $q);
+            $this->db->or_like('PhoneNum', $q);
+            $this->db->or_like('bank', $q);
+            $this->db->or_like('ImagePath', $q);
+            $this->db->group_end();
+            $this->db->limit($limit, $start);
+
+            return $this->db->get($this->table)->result();
+        }
+
+            // get total rows wait_confirm
+    function total_rows_wait_confirm($q = NULL) {
+        $this->db->join('order', 'order.OrderID = payment.OrderID');            
+        $this->db->where('OrderStatus', 'wait_confirm');            
+        $this->db->group_start();
+        $this->db->like('PaymentID', $q);
+        $this->db->or_like('PaymentDate', $q);
+        $this->db->or_like('TotalPrice', $q);
+        $this->db->or_like('payment.OrderID', $q);
+        $this->db->or_like('PhoneNum', $q);
+        $this->db->or_like('bank', $q);
+        $this->db->or_like('ImagePath', $q);
+        $this->db->group_end();
+	$this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
     // insert data
     function insert($data)
     {

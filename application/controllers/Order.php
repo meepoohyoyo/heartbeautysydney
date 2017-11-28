@@ -9,6 +9,7 @@ class Order extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Order_model');
+        $this->load->model('Customer_model');
         $this->load->library('form_validation');
     }
 
@@ -29,6 +30,22 @@ class Order extends CI_Controller
         $config['page_query_string'] = TRUE;
         $config['total_rows'] = $this->Order_model->total_rows($q);
         $order = $this->Order_model->get_limit_data($config['per_page'], $start, $q);
+
+        $allCustomerID = array();
+        foreach($order as $item){
+            if(!in_array($item->CustomerID, $allCustomerID)){
+                $allCustomerID[] = $item->CustomerID;
+            }
+        }
+
+        $allCustomerName = array();
+        foreach($allCustomerID as $customerID){
+            $customer = $this->Customer_model->get_by_id($customerID);
+            $allCustomerName[$customerID] = $customer->Firstname . " " . $customer->Lastname;
+        }
+        foreach($order as $item){
+            $item->{"CustomerName"} = $allCustomerName[$item->CustomerID];
+        }
 
         $this->load->library('pagination');
         $this->pagination->initialize($config);
@@ -149,6 +166,49 @@ class Order extends CI_Controller
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('order'));
+        }
+    }
+
+    public function confirmOrder($id){
+        $row = $this->Order_model->get_by_id($id);
+
+        if($row){
+            if($row->OrderStatus==="wait_confirm"){
+                $data = array(
+                    'OrderStatus' => 'confirm'
+                );
+                $this->Order_model->update($id, $data);
+                $this->session->set_flashdata('message', 'ยืนยันการชำระเงินสำเร็จ');
+            }else{
+                $this->session->set_flashdata('error_message', 'ลูกค้ายังไม่แจ้งชำระเงิน');
+            }
+            if($this->input->get('from') && $this->input->get('from')==='payment'){
+                redirect(site_url('payment?onlywaitconfirm=true'));
+            }else{
+                redirect(site_url('order'));                
+            }
+        }else{
+            $this->load->view('errors/404');
+        }
+    }
+
+    public function completeOrder($id){
+        $row = $this->Order_model->get_by_id($id);
+
+        if($row){
+            if($row->OrderStatus==="confirm"){
+                $data = array(
+                    'OrderStatus' => 'complete'
+                );
+                $this->Order_model->update($id, $data);
+                $this->session->set_flashdata('message', 'ยืนยันการจัดส่งสำเร็จ');
+            }else{
+                $this->session->set_flashdata('error_message', 'ออร์เดอร์ยังไม่อยู่ในสถานะยืนยันการชำระเงิน');                
+            }
+
+            redirect(site_url('order'));
+        }else{
+            $this->load->view('errors/404');
         }
     }
 

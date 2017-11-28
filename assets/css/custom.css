@@ -133,5 +133,14 @@ nav#second-navbar .container-fluid{
 
 }
 
+.badge-complete{
+    background-color:green;
+}
+.badge-confirm{
+    background-color:rgb(54, 54, 189);
+}
+.badge-wait_confirm{
+    background-color:yellow;
+}
 
 

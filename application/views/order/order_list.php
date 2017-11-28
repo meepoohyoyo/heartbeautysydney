@@ -1,11 +1,25 @@
 
         <h2 style="margin-top:0px">ออเดอร์สินค้า</h2>
+        <?php if($this->session->userdata('message')){ ?>
+        <div class="row">
+            <div class="alert alert-success text-center">
+            <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
+            </div>
+        </div>
+        <?php } ?>
+
+        <?php if($this->session->userdata('error_message')){ ?>
+        <div class="row">
+            <div class="alert alert-danger text-center">
+            <?php echo $this->session->userdata('error_message') <> '' ? $this->session->userdata('error_message') : ''; ?>
+            </div>
+        </div>
+        <?php } ?>
+
         <div class="row" style="margin-bottom: 10px">
           
             <div class="col-md-8 text-center">
-                <div style="margin-top: 8px" id="message">
-                    <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-                </div>
+
             </div>
             <div class="col-md-1 text-right">
             </div>
@@ -34,7 +48,7 @@
 		<th>หมายเลขออเดอร์</th>
 		<th>เวลาสั่งสินค้า</th>
 		<th>สถานะ</th>
-		<th>รหัสลูกค้า</th>
+		<th>ลูกค้า</th>
         <th>ยืนยันออเดอร์</th>
         <th>ยืนยันการจัดส่ง</th>
 		<th>ลบ</th>
@@ -48,9 +62,9 @@
 			<td><?php echo $order->GenerateNo ?></td>
 			<td><?php echo $order->OrderDate ?></td>
 			<td><?php echo getThaiOrder($order->OrderStatus) ?></td>
-			<td><?php echo $order->CustomerID ?></td>
-            <td><a href="#" class="btn btn-default">ยืนยันออเดอร์</a></td>
-            <td><a href="#" class="btn btn-default">ยืนยันจัดส่ง</a></td>
+			<td><?php echo $order->CustomerName; ?></td>
+            <td><a href="<?php echo site_url("order/confirm/" . $order->OrderID); ?>" class="btn btn-default">ยืนยันออเดอร์</a></td>
+            <td><a href="<?php echo site_url("order/complete/" . $order->OrderID); ?>" class="btn btn-default">ยืนยันจัดส่ง</a></td>
 			<td>
                 <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("order/delete").$order->OrderID; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 			</td>

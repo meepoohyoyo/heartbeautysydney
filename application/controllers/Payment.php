@@ -28,9 +28,31 @@ class Payment extends CI_Controller
 
         $config['per_page'] = 10;
         $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Payment_model->total_rows($q);
-        $payment = $this->Payment_model->get_limit_data($config['per_page'], $start, $q);
+        if($this->input->get('onlywaitconfirm')){
+            $payment = $this->Payment_model->get_limit_data_wait_confirm($config['per_page'], $start, $q);  
+            $config['total_rows'] = $this->Payment_model->total_rows_wait_confirm($q);            
+            
+        }else{
+            $payment = $this->Payment_model->get_limit_data($config['per_page'], $start, $q); 
+            $config['total_rows'] = $this->Payment_model->total_rows($q);        
+            
+        }
 
+        $allOrderID = array();
+        foreach($payment as $item){
+            if(!in_array($item->OrderID, $allOrderID)){
+                $allOrderID[] = $item->OrderID;
+            }
+        }
+        $allOrderStatus = array();
+        foreach($allOrderID as $orderID){
+            $order  = $this->Order_model->get_by_id($orderID);
+            $allOrderStatus[$orderID] = $order->OrderStatus;
+        }
+
+        foreach($payment as $item){
+            $item->{"OrderStatus"} = $allOrderStatus[$item->OrderID];
+        }
         $this->load->library('pagination');
         $this->pagination->initialize($config);
 

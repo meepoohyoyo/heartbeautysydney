@@ -24,6 +24,11 @@ $route['user/info'] = 'Customer/getUserInfo';
 $route['report/sale'] = 'admin/getSaleReport';
 $route['report/best-sale'] = 'admin/getBestSaleReport';
 $route['report/payment'] = 'admin/getPaymentReport';
+// order route
+// ยืนยัน slip เงิน
+$route['order/confirm/(:num)']= 'order/confirmOrder/$1';
+// ยืนยัน การส่ง
+$route['order/complete/(:num)']= 'order/completeOrder/$1';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

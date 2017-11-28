@@ -1,10 +1,23 @@
 
         <h2 style="margin-top:0px">การชำระเงิน</h2>
+        <?php if($this->session->userdata('message')){ ?>
+        <div class="row">
+            <div class="alert alert-success text-center">
+            <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
+            </div>
+        </div>
+        <?php } ?>
+
+        <?php if($this->session->userdata('error_message')){ ?>
+        <div class="row">
+            <div class="alert alert-danger text-center">
+            <?php echo $this->session->userdata('error_message') <> '' ? $this->session->userdata('error_message') : ''; ?>
+            </div>
+        </div>
+        <?php } ?>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-8 text-center">
-                <div style="margin-top: 8px" id="message">
-                    <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-                </div>
+
             </div>
             <div class="col-md-1 text-right">
             </div>
@@ -36,6 +49,7 @@
 		<th>หมายเลขโทรศัทพ์</th>
 		<th>ธนาคาร</th>
 		<th>รูปภาพ</th>
+		<th>สถานะออเดอร์</th>
         <th>ยืนยันออเดอร์</th>
         <th>ลบ</th>
             </tr><?php
@@ -50,8 +64,11 @@
 			<td><?php echo $payment->PhoneNum ?></td>
 			<td><?php echo $payment->bank ?></td>
 			<td><?php echo $payment->ImagePath ?></td>
+			<td><?php echo getThaiOrder($payment->OrderStatus); ?></td>
 			<td >
-                <a href="#" class="btn btn-default">ยืนยันออเดอร์</a>
+                <?php if($payment->OrderStatus==="wait_confirm"){ ?>
+                <a href="<?php echo site_url("order/confirm/". $payment->OrderID.  "?from=payment") ?>" class="btn btn-default">ยืนยันออเดอร์ไอดี <?php echo $payment->OrderID ?></a>
+                <?php } ?>
             </td>
             <td>
                 <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("payment/delete/").$payment->PaymentID; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
