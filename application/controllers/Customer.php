@@ -10,6 +10,10 @@ class Customer extends CI_Controller
         parent::__construct();
         $this->load->model('Customer_model');
         $this->load->library('form_validation');
+
+        if(!$this->session->get_userdata('loginuser')){
+            redirect('login');            
+        }
     }
 
     public function index()

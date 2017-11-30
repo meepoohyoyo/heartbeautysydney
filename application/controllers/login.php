@@ -50,6 +50,7 @@ class login extends CI_Controller
                               'loginuser' => TRUE,
                               'CustomerID'=> $CustomerData->CustomerID,
                               'CustomerToken' => $CustomerData->token,
+                              'is_admin'=>$CustomerData->is_admin
                          );
                          $this->session->set_userdata($sessiondata);
                          $this->session->set_userdata('cart_items', $this->Shoppingbag_model->get_user_unordered_cart_all($this->session->CustomerID));

@@ -17,7 +17,7 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge"><?php echo $completeOrders; ?></div>
+                                        <div class="huge"><?php echo $sumWaitConfirm; ?></div>
                                         <div>ออเดอร์ที่ชำระเงินแล้ว</div>
                                     </div>
                                 </div>

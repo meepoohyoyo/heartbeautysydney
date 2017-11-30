@@ -14,6 +14,20 @@ class Product extends CI_Controller
         $this->load->model('Shoppingbag_model');
         $this->load->library('form_validation');
         $this->load->library('upload');
+
+        if ( ! $this->session->userdata('loginuser')){ 
+            redirect('login');
+        }else{
+            $allowed = array(
+                'create','create_action','update','update_action','delete'
+            );
+            if ( in_array($this->router->fetch_method(), $allowed) 
+            && (!$this->session->userdata('is_admin') 
+            || (int)$this->session->userdata('is_admin')!==1))
+            {
+                redirect('login');
+            }
+        }
     }
 
     public function index()

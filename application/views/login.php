@@ -72,8 +72,7 @@ img.avatar {
 
                         <br><label><b>Password&nbsp;</b></label> 
                         <input type="password" placeholder="Enter Password" name="password" required id="loginPassword">
-                        
-                        <a href="#">Forgot password?</a>
+                       
                     </div>
                         <center>
                             <br><input type="submit" name="btn_login" id="btn_login" value="Login" class="rbtn" >

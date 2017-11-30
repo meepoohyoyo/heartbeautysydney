@@ -12,7 +12,13 @@ class admin extends CI_Controller {
         $this->load->model('Producttype_model');
         $this->load->model('Shoppingbag_model');
         $this->load->model('Customer_model');
-        $this->load->model('Order_model');
+		$this->load->model('Order_model');
+
+	   if ( !$this->session->userdata('loginuser') || !$this->session->userdata('is_admin')
+	   || (int)$this->session->userdata('is_admin')!==1)
+        { 
+            redirect('login');
+        }
     }
 
 	public function index()
@@ -24,6 +30,7 @@ class admin extends CI_Controller {
 			'latestOrders'=>$this->Order_model->get_latest_all(),
 			'sum_amount' => $this->Order_model->get_join_product()[0]->sum_amount,
 			'sum_totalprice' => $this->Order_model->get_join_product()[0]->sum_totalprice,
+			'sumWaitConfirm' => $this->Order_model->count_all_wait_confirm()
 		);
 
 		$this->load->view('admin/header');

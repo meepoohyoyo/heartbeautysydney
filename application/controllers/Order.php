@@ -11,6 +11,20 @@ class Order extends CI_Controller
         $this->load->model('Order_model');
         $this->load->model('Customer_model');
         $this->load->library('form_validation');
+
+        if ( ! $this->session->userdata('loginuser')){ 
+            redirect('login');
+        }else{
+            $allowed = array(
+                'index','read','create','create_action','update','update_action','delete'
+            );
+            if ( in_array($this->router->fetch_method(), $allowed) 
+            && (!$this->session->userdata('is_admin') 
+            || (int)$this->session->userdata('is_admin')!==1) )
+            {
+                redirect('login');
+            }
+        }
     }
 
     public function index()

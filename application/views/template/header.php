@@ -57,9 +57,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="<?php echo site_url('/'); ?>" style="margin-top:-5px;"><i class="fa fa-home" style="font-size: 2em;" aria-hidden="true"></i> </a></li>
+                    <li><a href="<?php echo site_url('/'); ?>" style="margin-top:-5px;"><i class="fa fa-home" style="font-size: 2em;" aria-hidden="true"></i>eart Beauty </a></li>
                 </ul>
                 <ul class="nav navbar-nav  navbar-right" >
+                    <li><a href="<?php echo site_url('/admin') ?>">สำหรับผู้ดูแลระบบ</a></li>
                     <li>
                         <a href="<?php echo site_url('shoppingbagclient'); ?>"><i class="fa fa-shopping-basket"></i>
                             <?php 
@@ -120,10 +121,10 @@
                         <a href="<?php echo site_url('/skincare');?>">+สกินแคร์</a>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('/supplementary');?>">+ผิวกาย</a>
+                        <a href="<?php echo site_url('/body');?>">+ผิวกาย</a>
                     </li>
                     <li>
-                        <a href="<?php echo site_url('/body');?>">+อาหารเสริม</a>
+                        <a href="<?php echo site_url('/supplementary');?>">+อาหารเสริม</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

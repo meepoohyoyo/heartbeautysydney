@@ -65,6 +65,14 @@ class Order_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
+    function count_all_wait_confirm(){
+        $this->db->where(array(
+            'OrderStatus'=>'wait_confirm'
+            ));
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
     // get data by id
     function get_by_id($id)
     {
