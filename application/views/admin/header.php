@@ -21,7 +21,8 @@
     <link href="<?php echo base_url('assets/css/font-awesome.min.css');?>" rel="stylesheet">
     <!-- Morris Charts CSS -->
     <link href="<?php echo base_url('assets/css/plugins/morris.css');?>" rel="stylesheet">
-
+    <link href="<?php echo base_url('assets/bootstrap-multiselect/bootstrap-multiselect.css');?>" rel="stylesheet">
+    
     <link href="<?php echo base_url('assets/css/custom.css');?>" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

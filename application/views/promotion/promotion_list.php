@@ -38,7 +38,6 @@
         <th>วันสิ้นสุดโปรโมชั่น</th>
         <th>ประเภทโปรโมชั่น</th>
 		<th>ส่วนลดสินค้า</th>
-        <th>ราคาโปรโมชั่น</th>
         <th>รายละเอียดโปรโมชั่น</th>
         <th>รูปสินค้า</th>
 		<th>Action</th>
@@ -54,7 +53,6 @@
             <td><?php echo $promotion->TypePromotion ?></td>
             <td><?php echo $promotion->PromotionDetail ?></td>
 			<td><?php echo $promotion->UnitOfDiscount ?></td>
-            <td><?php echo $promotion->Value ?></td>
             <td><?php echo $promotion->ImagePath ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 

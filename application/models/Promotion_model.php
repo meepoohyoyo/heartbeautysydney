@@ -38,7 +38,6 @@ class Promotion_model extends CI_Model
 	$this->db->or_like('PromotionName', $q);
 	$this->db->or_like('UnitOfDiscount', $q);
 	$this->db->or_like('TypePromotion', $q);
-	$this->db->or_like('Value', $q);
 	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
@@ -53,7 +52,6 @@ class Promotion_model extends CI_Model
 	$this->db->or_like('PromotionName', $q);
 	$this->db->or_like('UnitOfDiscount', $q);
 	$this->db->or_like('TypePromotion', $q);
-	$this->db->or_like('Value', $q);
 	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }

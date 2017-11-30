@@ -306,6 +306,17 @@ class Product extends CI_Controller
         }
     }
 
+    public function product_search(){
+        $q = urldecode($this->input->get('q', TRUE));
+        $data = array();
+        $data['results'] = $this->Product_model->get_customer_search_data($q);
+        $data['q'] = $q;
+
+        $this->load->view('template/header');
+        $this->load->view('product/product_search', $data);
+        $this->load->view('template/footer');
+    }
+
     public function _rules() 
     {
 	$this->form_validation->set_rules('ProductName', 'productname', 'trim|required');

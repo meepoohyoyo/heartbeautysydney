@@ -66,7 +66,7 @@
             <td><a href="<?php echo site_url("order/confirm/" . $order->OrderID); ?>" class="btn btn-default">ยืนยันออเดอร์</a></td>
             <td><a href="<?php echo site_url("order/complete/" . $order->OrderID); ?>" class="btn btn-default">ยืนยันจัดส่ง</a></td>
 			<td>
-                <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("order/delete").$order->OrderID; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("order/delete/").$order->OrderID; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 			</td>
 		</tr>
                 <?php

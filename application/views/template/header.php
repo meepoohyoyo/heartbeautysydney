@@ -129,8 +129,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form class="form-inline" id="navbar-search">
-                            <input class="form-control" type="search" placeholder="ค้นหาสินค้า" aria-label="Search"> 
+                        <form class="form-inline" id="navbar-search" method="get" action="<?php echo site_url('product_search') ?>">
+                            <input class="form-control" type="search" placeholder="ค้นหาสินค้า" aria-label="Search"
+                        name="q"
+                            > <input type="submit" style="display: none" />
                             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                         </form>
                     </li>

@@ -7,12 +7,15 @@
             <input type="text" class="form-control" name="PromotionName" id="PromotionName" placeholder="ชื่อโปรโมชั่น" value="<?php echo $PromotionName; ?>" />
         </div>
 
-        <form action="/action_page.php">
-            <b>วันเริ่มโปรโมชั่น</b>
-            <input type="date" name="bday" min="1800-01-01"><br><br>
-            <b>วันสิ้นสุดโปรโมชั่น</b>
-            <input type="date" name="bday" min="1800-01-01"><br><br>
-        </form>
+        <div class="form-group">
+            <label for="varchar">วันเริ่มโปรโมชั่น<?php echo form_error('StartDate') ?></label>
+            <input type="date" name="StartDate" min="1800-01-01">
+        </div>
+
+        <div class="form-group">
+            <label for="varchar">วันสิ้นสุดโปรโมชั่น<?php echo form_error('EndDate') ?></label>
+            <input type="date" name="EndDate" min="1800-01-01"><br><br>
+        </div>
 
         <div class="form-group">
             <label for="varchar">ประเภทโปรโมชั่น<?php echo form_error('TypePromotion') ?></label>
@@ -26,11 +29,6 @@
             <label for="float">ส่วนลดสินค้า<?php echo form_error('UnitOfDiscount') ?></label>
             <input type="text" class="form-control" name="UnitOfDiscount" id="UnitOfDiscount" placeholder="ส่วนลดสินค้า เช่น 30" value="<?php echo $UnitOfDiscount; ?>" />
         </div>
-        
-	    <div class="form-group">
-            <label for="float">ราคาโปรโมชั่น <?php echo form_error('Value') ?></label>
-            <input type="text" class="form-control" name="Value" id="Value" placeholder="Value" value="<?php echo $Value; ?>" />
-        </div>
 
         <div class="form-group">
             <label for="varchar">รายละเอียดโปรโมชั่น <?php echo form_error('PromotionDetail') ?></label>
@@ -43,9 +41,20 @@
                 <input type="file" class="upload" name="ImagePath"/>
             </div>
         </div>
+        <div class="form-group">
+            <label for="promotionproduct_error"><?php echo form_error('promotionproduct') ?></label>            
+        </div>        
+        <div class="form-group">
+            <label for="promotionproduct">เลือกสินค้าสำหรับโปรโมชันนี้</label>
+            <select id="promotionproduct" name="promotionproduct[]" multiple="multiple">
+                <?php foreach($products as $product){ ?>
+                    <option value="<?php echo $product->ProductID ?>"><?php echo $product->ProductName ?></option>
+                <?php }?>
+            </select>
+        </div>
 
 	    <input type="hidden" name="PromotionID" value="<?php echo $PromotionID; ?>" /> 
-	    <button type="submit" class="btn btn-custom-histle"><?php echo $button ?></button> 
+	    <input type="submit" class="btn btn-custom-histle" value="<?php echo $button ?>">
 	    <a href="<?php echo site_url('promotion') ?>" class="btn btn-default">Cancel</a>
     </form>
 </div>

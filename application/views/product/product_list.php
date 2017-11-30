@@ -48,7 +48,7 @@
 			<td width="80px"><?php echo ++$start ?></td>
 			<td><?php echo $product->ProductName ?></td>
 			<td><?php echo $product->ProductPrice ?></td>
-			<td><?php echo $product->ImagePath ?></td>
+			<td> <img src="assets/img/<?php echo $product->ImagePath ?>" width="231" height="131"></img></td>
 			<td><?php echo $product->ProductDetail ?></td>
 			<td><?php echo $product->Cost ?></td>
 			<td><?php echo $product->TypeID ?></td>

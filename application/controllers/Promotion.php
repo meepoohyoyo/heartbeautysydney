@@ -9,6 +9,7 @@ class Promotion extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Promotion_model');
+        $this->load->model('Product_model');
         $this->load->library('form_validation');
 
         if ( ! $this->session->userdata('loginuser')){ 
@@ -71,7 +72,6 @@ class Promotion extends CI_Controller
 		'PromotionName' => $row->PromotionName,
 		'UnitOfDiscount' => $row->UnitOfDiscount,
 		'TypePromotion' => $row->TypePromotion,
-        'Value' => $row->Value,
         'ImagePath' => $row->ImagePath,
         );
             $this->load->view('admin/header');
@@ -88,16 +88,17 @@ class Promotion extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('promotion/create_action'),
-	    'PromotionID' => set_value('PromotionID'),
-	    'StartDate' => set_value('StartDate'),
-	    'EndDate' => set_value('EndDate'),
-	    'PromotionDetail' => set_value('PromotionDetail'),
-	    'PromotionName' => set_value('PromotionName'),
-	    'UnitOfDiscount' => set_value('UnitOfDiscount'),
-	    'TypePromotion' => set_value('TypePromotion'),
-        'Value' => set_value('Value'),
-        'ImagePath' => set_value('ImagePath'),
-	);
+            'PromotionID' => set_value('PromotionID'),
+            'StartDate' => set_value('StartDate'),
+            'EndDate' => set_value('EndDate'),
+            'PromotionDetail' => set_value('PromotionDetail'),
+            'PromotionName' => set_value('PromotionName'),
+            'UnitOfDiscount' => set_value('UnitOfDiscount'),
+            'TypePromotion' => set_value('TypePromotion'),
+            'products' => $this->Product_model->get_customer_search_data(),
+            'ImagePath' => set_value('ImagePath'),
+        );
+
         $this->load->view('admin/header');
         $this->load->view('promotion/promotion_form', $data);
         $this->load->view('admin/footer');
@@ -110,17 +111,17 @@ class Promotion extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
+            var_dump($this->input->post());
+            die();
             $data = array(
-		'StartDate' => $this->input->post('StartDate',TRUE),
-		'EndDate' => $this->input->post('EndDate',TRUE),
-		'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
-		'PromotionName' => $this->input->post('PromotionName',TRUE),
-		'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
-		'TypePromotion' => $this->input->post('TypePromotion',TRUE),
-        'Value' => $this->input->post('Value',TRUE),
-        'ImagePath' => $this->upload->data('file_name'),
-        
-	    );
+                'StartDate' => $this->input->post('StartDate',TRUE),
+                'EndDate' => $this->input->post('EndDate',TRUE),
+                'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
+                'PromotionName' => $this->input->post('PromotionName',TRUE),
+                'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
+                'TypePromotion' => $this->input->post('TypePromotion',TRUE),
+                'ImagePath' => $this->upload->data('file_name'),
+            );
 
             $this->Promotion_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
@@ -143,7 +144,6 @@ class Promotion extends CI_Controller
 		'PromotionName' => set_value('PromotionName', $row->PromotionName),
 		'UnitOfDiscount' => set_value('UnitOfDiscount', $row->UnitOfDiscount),
 		'TypePromotion' => set_value('TypePromotion', $row->TypePromotion),
-        'Value' => set_value('Value', $row->Value),
         'ImagePath' => set_value('ImagePath', $row->ImagePath),
 	    );
             $this->load->view('admin/header');
@@ -164,15 +164,14 @@ class Promotion extends CI_Controller
             $this->update($this->input->post('PromotionID', TRUE));
         } else {
             $data = array(
-		'StartDate' => $this->input->post('StartDate',TRUE),
-		'EndDate' => $this->input->post('EndDate',TRUE),
-		'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
-		'PromotionName' => $this->input->post('PromotionName',TRUE),
-		'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
-		'TypePromotion' => $this->input->post('TypePromotion',TRUE),
-        'Value' => $this->input->post('Value',TRUE),
-        'ImagePath' => $this->upload->data('file_name'),
-	    );
+                'StartDate' => $this->input->post('StartDate',TRUE),
+                'EndDate' => $this->input->post('EndDate',TRUE),
+                'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
+                'PromotionName' => $this->input->post('PromotionName',TRUE),
+                'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
+                'TypePromotion' => $this->input->post('TypePromotion',TRUE),
+                'ImagePath' => $this->upload->data('file_name'),
+            );
 
             $this->Promotion_model->update($this->input->post('PromotionID', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
@@ -202,7 +201,7 @@ class Promotion extends CI_Controller
 	$this->form_validation->set_rules('PromotionName', 'promotionname', 'trim|required');
 	$this->form_validation->set_rules('UnitOfDiscount', 'unitofdiscount', 'trim|required');
 	$this->form_validation->set_rules('TypePromotion', 'typepromotion', 'trim|required');
-	$this->form_validation->set_rules('Value', 'value', 'trim|required');
+	$this->form_validation->set_rules('promotionproduct', 'promotionproduct', 'required');
 
 	$this->form_validation->set_rules('PromotionID', 'PromotionID', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');

@@ -24,6 +24,7 @@ $route['user/info'] = 'Customer/getUserInfo';
 $route['report/sale'] = 'admin/getSaleReport';
 $route['report/best-sale'] = 'admin/getBestSaleReport';
 $route['report/payment'] = 'admin/getPaymentReport';
+$route['product_search'] = 'Product/product_search';
 // order route
 // ยืนยัน slip เงิน
 $route['order/confirm/(:num)']= 'order/confirmOrder/$1';

@@ -56,6 +56,13 @@ class Product_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
+    function get_customer_search_data($q = NULL){
+        $this->db->like('ProductName', $q);
+        $this->db->or_like('ProductDetail', $q);
+
+        return $this->db->get($this->table)->result();
+    }
+
     // insert data
     function insert($data)
     {

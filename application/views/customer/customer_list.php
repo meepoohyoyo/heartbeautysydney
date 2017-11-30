@@ -1,5 +1,5 @@
 
-        <h2 style="margin-top:0px">บัญชีลูกค้า</h2>
+        <h2>บัญชีลูกค้า</h2>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
                 <?php echo anchor(site_url('customer/create'),'Create', 'class="btn btn-primary"'); ?>
@@ -41,6 +41,7 @@
 		<th>Username</th>
 		<th>Password</th>
 		<th>Action</th>
+        <th><i class="fa fa-print" aria-hidden="true"></i></th>
             </tr><?php
             foreach ($customer_data as $customer)
             {
@@ -63,6 +64,7 @@
 				echo anchor(site_url('customer/delete/'.$customer->CustomerID),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
 				?>
 			</td>
+            <td><a class="fa fa-print" aria-hidden="true"></a></td>
 		</tr>
                 <?php
             }
