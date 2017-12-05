@@ -73,29 +73,29 @@
             </div>
         </div>
     </div>
+    <?php foreach($promotions as $promotion){ ?>
     <div class="row">
         <div class="col-md-12">
-            <div class="promotions-item">
+            <div class="promotions-item" style="width: 100%;">
                 <div class="promotion-thumbnail">
-                    <img src="assets/img/123.jpg" alt="buy">
+                    <img src="assets/img/<?php echo $promotion->ImagePath ?>" alt="buy">
                 </div>
                 <div class="promotion-details">
-                    <span class="offer-timeout"><i class="glyphicon glyphicon-time"></i> 12:12:00 </span>
-                    <h3 class="promotion-title">Product</h3>
-                    <p class="promotion-description">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                        It has survived not only five centuries
-                        simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                        It has survived not only five centuries</p>
+                    <span class="offer-timeout"><i class="glyphicon glyphicon-time"></i> 
+                        <span class="countdown-span" data-enddate="<?php echo $promotion->EndDate ?>"></span> 
+                    </span>
+                    <h3 class="promotion-title"><?php echo $promotion->PromotionName ?></h3>
+                    <p class="promotion-description"><?php echo $promotion->PromotionDetail ?></p>
                     <div class="promotion-action-btn-group">
-                        <span class="price-tag"><b>$299</b></span>
-                        <button class="btn btn-custom-pink pull-right width-200">ซื้อเลย</button>
+                        <span class="price-tag"><b><?php echo $promotion->sumCost ?> บาท</b></span>
+                        <a class="btn btn-custom-pink pull-right width-200" 
+                        href="<?php echo site_url('promotion-add-to-cart'); ?>/<?php echo $promotion->PromotionID ?>">ซื้อเลย</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php } ?>
 </div>
         
   

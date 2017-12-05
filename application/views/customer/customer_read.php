@@ -6,7 +6,6 @@
 			<tr><td>หมายเลขโทรศัพท์</td><td><?php echo $MobilePhone; ?></td></tr>
 			<tr><td>Email</td><td><?php echo $Email; ?></td></tr>
 			<tr><td>Username</td><td><?php echo $Username; ?></td></tr>
-			<tr><td>Password</td><td><?php echo $Password; ?></td></tr>
 			<tr><td></td><td><a href="<?php echo site_url('customer') ?>" class="btn btn-custom-cancel">Cancel</a></td></tr>
 		</table>
 </div>

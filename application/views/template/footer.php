@@ -1,5 +1,6 @@
   <!-- jQuery -->
     <script src="<?php echo base_url('assets/js/jquery.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/jquery.countdown.min.js');?>"></script>
 
     <!-- Bootstrap Core JavaScript -->
    
@@ -57,6 +58,14 @@
             });
             refreshSumAmountAll()
           }
+      })
+
+      $(".countdown-span").each(function(){
+        $(this).countdown($(this).attr("data-enddate"), function(event) {
+          $(this).text(
+            event.strftime('%D วัน %H:%M:%S')
+          );
+        });
       })
 
       $("#submit-first-form").click(function(){

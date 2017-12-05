@@ -100,7 +100,7 @@
                                 </li>
                             </ul>
                         </li>              
-                    <?php            }else{ ?>
+                    <?php   }else{ ?>
                         <li>
                             <a href="<?php echo site_url('/login'); ?>">เข้าสู่ระบบ/ลงทะเบียนใหม่</a>
                         </li>  

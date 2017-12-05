@@ -7,7 +7,7 @@ class Promotionproduct_model extends CI_Model
 {
 
     public $table = 'promotionproduct';
-    public $id = '';
+    public $id = 'PromotionID';
     public $order = 'DESC';
 
     function __construct()
@@ -28,13 +28,18 @@ class Promotionproduct_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+    function get_all_by_id($id)
+    {
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->result();
+    }
     
     // get total rows
     function total_rows($q = NULL) {
         $this->db->like('', $q);
 	$this->db->or_like('PromotionID', $q);
 	$this->db->or_like('ProductID', $q);
-	$this->db->or_like('PPDate', $q);
 	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
@@ -45,7 +50,6 @@ class Promotionproduct_model extends CI_Model
         $this->db->like('', $q);
 	$this->db->or_like('PromotionID', $q);
 	$this->db->or_like('ProductID', $q);
-	$this->db->or_like('PPDate', $q);
 	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }

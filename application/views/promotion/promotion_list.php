@@ -53,7 +53,7 @@
             <td><?php echo $promotion->TypePromotion ?></td>
             <td><?php echo $promotion->PromotionDetail ?></td>
 			<td><?php echo $promotion->UnitOfDiscount ?></td>
-            <td><?php echo $promotion->ImagePath ?></td>
+            <td> <img src="assets/img/<?php echo $promotion->ImagePath ?>" width="231" height="131"></img></td>
 			<td style="text-align:center" width="200px">
 				<?php 
 				echo anchor(site_url('promotion/read/'.$promotion->PromotionID),'Read'); 

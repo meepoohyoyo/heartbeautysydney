@@ -1,6 +1,6 @@
 <div class="container admin-container">
         <h2>เพิ่มโปรโมชั่น</h2>
-        <form action="<?php echo $action; ?>" method="post">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
        
         <div class="form-group">
             <label for="varchar">ชื่อโปรโมชั่น <?php echo form_error('PromotionName') ?></label>
@@ -9,19 +9,19 @@
 
         <div class="form-group">
             <label for="varchar">วันเริ่มโปรโมชั่น<?php echo form_error('StartDate') ?></label>
-            <input type="date" name="StartDate" min="1800-01-01">
+            <input type="date" name="StartDate" min="1800-01-01" value="<?php echo $StartDate; ?>">
         </div>
 
         <div class="form-group">
             <label for="varchar">วันสิ้นสุดโปรโมชั่น<?php echo form_error('EndDate') ?></label>
-            <input type="date" name="EndDate" min="1800-01-01"><br><br>
+            <input type="date" name="EndDate" min="1800-01-01" value="<?php echo $EndDate; ?>">
         </div>
 
         <div class="form-group">
             <label for="varchar">ประเภทโปรโมชั่น<?php echo form_error('TypePromotion') ?></label>
              <br><select class="form-control" name="TypePromotion">
-                <option value="ส่วนลดตามเปอร์เซ็น">ส่วนลดตามเปอร์เซ็น</option>
-                <option value="ลดตามการระบุราคา">ลดตามการระบุราคา</option>
+                <option value="1">ส่วนลดตามเปอร์เซ็น</option>
+                <option value="2">ลดตามการระบุราคา</option>
             </select>
         </div>
 	    
@@ -41,14 +41,15 @@
                 <input type="file" class="upload" name="ImagePath"/>
             </div>
         </div>
+
         <div class="form-group">
             <label for="promotionproduct_error"><?php echo form_error('promotionproduct') ?></label>            
-        </div>        
+        </div>
         <div class="form-group">
             <label for="promotionproduct">เลือกสินค้าสำหรับโปรโมชันนี้</label>
             <select id="promotionproduct" name="promotionproduct[]" multiple="multiple">
                 <?php foreach($products as $product){ ?>
-                    <option value="<?php echo $product->ProductID ?>"><?php echo $product->ProductName ?></option>
+                    <option value="<?php echo $product->ProductID ?>" <?php isset($allProductID)&&in_array($product->ProductID, $allProductID)?"selected":"" ?>><?php echo $product->ProductName ?></option>
                 <?php }?>
             </select>
         </div>

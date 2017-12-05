@@ -12,6 +12,8 @@ class Product extends CI_Controller
         $this->load->model('Product_model');
         $this->load->model('Producttype_model');
         $this->load->model('Shoppingbag_model');
+        $this->load->model('Promotion_model');
+        $this->load->model('Promotionproduct_model');
         $this->load->library('form_validation');
         $this->load->library('upload');
 
@@ -62,6 +64,44 @@ class Product extends CI_Controller
         $this->load->view('admin/header');
         $this->load->view('product/product_list', $data);
         $this->load->view('admin/footer');
+    }
+
+    public function promotion_add_to_cart($PromotionID){
+        if(!isset($_SESSION['username'])){
+            redirect(site_url('login'));
+        }
+
+        $promotion = $this->Promotion_model->get_by_id($PromotionID);
+        $many_pp = $this->Promotionproduct_model->get_all_by_id($PromotionID);
+        foreach($many_pp as $single_pp){
+            $productModel = $this->Product_model->get_by_id($single_pp->ProductID);
+            $productPrice = 0;
+
+            if((int)$promotion->TypePromotion===1){ //ลด %
+                $productPrice = (float)$productModel->Cost 
+                - ( (float)$productModel->Cost * ( (float)$promotion->UnitOfDiscount/100.0) );
+            }else if((int) $promotion->TypePromotion===2){ // ลดเป็นบาท
+                $productPrice = (float)$productModel->Cost - (float)$promotion->UnitOfDiscount/100.0;
+            }
+            $data = array(
+                'CustomerID' => $this->session->CustomerID,
+                'ProductID' => $single_pp->ProductID,
+                'amount' => 1,
+                'totalprice' =>$productPrice,
+                'status' => null,
+                'is_promotion'=>1, 
+                'PromotionPrice'=>$productPrice,
+                'PromotionID'=>$PromotionID
+                );
+
+            $this->Shoppingbag_model->insert($data);
+        }
+
+        $this->session->set_flashdata('message', 'Item Added');
+        
+        $this->session->set_userdata('cart_items', count($this->Shoppingbag_model->get_user_cart_all($this->session->CustomerID)));
+        
+        redirect(site_url('/'));
     }
 
     public function add_to_cart($ProductID){

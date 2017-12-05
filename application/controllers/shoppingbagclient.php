@@ -11,6 +11,7 @@ class shoppingbagclient extends CI_Controller
         $this->load->model('Shoppingbag_model');
         $this->load->model('Product_model');
         $this->load->model('Order_model');
+        $this->load->model('Promotionproduct_model');
         $this->load->library('form_validation');
         $this->load->library('session');
     }
@@ -87,6 +88,21 @@ class shoppingbagclient extends CI_Controller
         } else {
             redirect(site_url('shoppingbagclient'));
         }
+    }
+
+    public function promotionbagdelete($id){
+        $row = $this->Shoppingbag_model->get_by_id($id);
+        $all_pp = $this->Promotionproduct_model->get_all_by_id($row->PromotionID);
+
+        var_dump($all_pp);
+        die();
+
+        if(count($all_pp) > 0){
+            $this->Shoppingbag_model->deleteAllPromotion($all_pp[0]->PromotionID, $all_pp[0]->CustomerID);
+            $this->session->set_userdata('cart_items', count($this->Shoppingbag_model->get_user_cart_all($this->session->CustomerID)));            
+        }
+
+        redirect(site_url('shoppingbagclient'));
     }
 
     public function submitbag(){

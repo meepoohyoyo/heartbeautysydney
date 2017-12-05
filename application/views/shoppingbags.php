@@ -19,14 +19,24 @@
           <td><?php echo $row->ProductName; ?></td>
           <td><?php echo $row->ProductPrice; ?></td>
           <td>
+            <?php if($row->is_promotion){ ?>
+              <label for=""><?php echo $row->amount ?> (สินค้าโปรโมชั่น)</label>
+            <?php }else{ ?>
               <a href="#" class="delete-amount-btn"><span class="glyphicon glyphicon-minus"></span></a>
               <input type="hidden" id="input-shopping-bag-id" value="<?php echo $row->id; ?>">
               <input type="number" min="1" value="<?php echo $row->amount; ?>" name="amount">
               <input type="hidden" id="price" value="<?php echo $row->ProductPrice; ?>">
               <a href="#" class="add-amount-btn"><span class="glyphicon glyphicon-plus"></span></a>
+            <?php } ?>
           </td>
-          <td><p name="totalprice" ><?php echo $row->totalprice; ?></p></td>
-          <td><a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("bagdelete")."/". $row->id; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+          <td><p name="totalprice" ><?php echo (int)$row->totalprice; ?></p></td>
+          <td>
+            <?php if($row->is_promotion){ ?>
+              <a onclick="return confirm('ยืนยันการลบทั้งโปรโมชัน?')" href="<?php echo site_url("promotionbagdelete")."/". $row->id; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>              
+            <?php }else{ ?>
+              <a onclick="return confirm('ยืนยันการลบ?')" href="<?php echo site_url("bagdelete")."/". $row->id; ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            <?php } ?>
+          </td>
         </tr>
         <?php } ?>
       </tbody>

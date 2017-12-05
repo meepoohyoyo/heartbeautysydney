@@ -39,7 +39,6 @@
 		<th>MobilePhone</th>
 		<th>Email</th>
 		<th>Username</th>
-		<th>Password</th>
 		<th>Action</th>
         <th><i class="fa fa-print" aria-hidden="true"></i></th>
             </tr><?php
@@ -54,7 +53,6 @@
 			<td><?php echo $customer->MobilePhone ?></td>
 			<td><?php echo $customer->Email ?></td>
 			<td><?php echo $customer->Username ?></td>
-			<td><?php echo $customer->Password ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 
 				echo anchor(site_url('customer/read/'.$customer->CustomerID),'Read'); 

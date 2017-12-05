@@ -9,6 +9,7 @@ class Promotion extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Promotion_model');
+        $this->load->model('Promotionproduct_model');
         $this->load->model('Product_model');
         $this->load->library('form_validation');
 
@@ -111,19 +112,69 @@ class Promotion extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
-            var_dump($this->input->post());
-            die();
-            $data = array(
-                'StartDate' => $this->input->post('StartDate',TRUE),
-                'EndDate' => $this->input->post('EndDate',TRUE),
-                'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
-                'PromotionName' => $this->input->post('PromotionName',TRUE),
-                'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
-                'TypePromotion' => $this->input->post('TypePromotion',TRUE),
-                'ImagePath' => $this->upload->data('file_name'),
-            );
+            
+            if (!empty($_FILES['ImagePath']['name'])) {
+                // upload
+                $config['upload_path']          = realpath(dirname(__FILE__)) .'\..\..\assets\img';
+                $config['max_size']             = 0;
+                $config['allowed_types'] = 'gif|jpg|png';
 
-            $this->Promotion_model->insert($data);
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ( ! $this->upload->do_upload('ImagePath'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+                        var_dump($this->upload->display_errors());
+                        die();
+                }
+                $data = array(
+                    'StartDate' => $this->input->post('StartDate',TRUE),
+                    'EndDate' => $this->input->post('EndDate',TRUE),
+                    'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
+                    'PromotionName' => $this->input->post('PromotionName',TRUE),
+                    'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
+                    'TypePromotion' => $this->input->post('TypePromotion',TRUE),
+                    'ImagePath' =>  $this->upload->data('file_name'),
+                );
+    
+                $promotion_id = $this->Promotion_model->insert($data);
+
+                $config['image_library'] = 'gd2';
+                $config['source_image'] =  $this->upload->data('full_path');
+                $config['maintain_ratio'] = TRUE;
+                $config['width']         = 450;
+                $config['height']       = 450;
+
+                $this->load->library('image_lib', $config);
+
+                if ( ! $this->image_lib->resize())
+                {
+                    var_dump($this->image_lib->display_errors());
+                }
+            }else{
+                $data = array(
+                    'StartDate' => $this->input->post('StartDate',TRUE),
+                    'EndDate' => $this->input->post('EndDate',TRUE),
+                    'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
+                    'PromotionName' => $this->input->post('PromotionName',TRUE),
+                    'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
+                    'TypePromotion' => $this->input->post('TypePromotion',TRUE),
+                    'ImagePath' =>  $this->upload->data('file_name'),
+                );
+    
+                $promotion_id = $this->Promotion_model->insert($data);
+            }
+
+            foreach($this->input->post('promotionproduct') as $productID){
+                $ppData = array(
+                    'ProductID'=>$productID,
+                    'PromotionID'=>$promotion_id
+                );
+
+                $this->Promotionproduct_model->insert($ppData);
+            }
+
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('promotion'));
         }
@@ -134,18 +185,23 @@ class Promotion extends CI_Controller
         $row = $this->Promotion_model->get_by_id($id);
 
         if ($row) {
+            $allProductID = array();
+            foreach($this->Promotionproduct_model->get_all_by_id($id) as $pp){
+                $allProductID[] = $pp->ProductID;
+            }
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('promotion/update_action'),
-		'PromotionID' => set_value('PromotionID', $row->PromotionID),
-		'StartDate' => set_value('StartDate', $row->StartDate),
-		'EndDate' => set_value('EndDate', $row->EndDate),
-		'PromotionDetail' => set_value('PromotionDetail', $row->PromotionDetail),
-		'PromotionName' => set_value('PromotionName', $row->PromotionName),
-		'UnitOfDiscount' => set_value('UnitOfDiscount', $row->UnitOfDiscount),
-		'TypePromotion' => set_value('TypePromotion', $row->TypePromotion),
-        'ImagePath' => set_value('ImagePath', $row->ImagePath),
-	    );
+                'PromotionID' => set_value('PromotionID', $row->PromotionID),
+                'StartDate' => set_value('StartDate', $row->StartDate),
+                'EndDate' => set_value('EndDate', $row->EndDate),
+                'PromotionDetail' => set_value('PromotionDetail', $row->PromotionDetail),
+                'PromotionName' => set_value('PromotionName', $row->PromotionName),
+                'UnitOfDiscount' => set_value('UnitOfDiscount', $row->UnitOfDiscount),
+                'TypePromotion' => set_value('TypePromotion', $row->TypePromotion),
+                'ImagePath' => set_value('ImagePath', $row->ImagePath),
+                'allProductID' => $allProductID,
+                );
             $this->load->view('admin/header');
             $this->load->view('promotion/promotion_form', $data);
             $this->load->view('admin/footer');
@@ -163,17 +219,68 @@ class Promotion extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('PromotionID', TRUE));
         } else {
-            $data = array(
-                'StartDate' => $this->input->post('StartDate',TRUE),
-                'EndDate' => $this->input->post('EndDate',TRUE),
-                'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
-                'PromotionName' => $this->input->post('PromotionName',TRUE),
-                'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
-                'TypePromotion' => $this->input->post('TypePromotion',TRUE),
-                'ImagePath' => $this->upload->data('file_name'),
-            );
+            if (!empty($_FILES['ImagePath']['name'])){
+                // upload
+                $config['upload_path']          = realpath(dirname(__FILE__)) .'\..\..\assets\img';
+                $config['max_size']             = 0;
+                $config['allowed_types'] = 'gif|jpg|png';
 
-            $this->Promotion_model->update($this->input->post('PromotionID', TRUE), $data);
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ( ! $this->upload->do_upload('ImagePath'))
+                {
+                        $error = array('error' => $this->upload->display_errors());
+                        var_dump($this->upload->display_errors());
+                        die();
+                }else{
+                    $config['image_library'] = 'gd2';
+                    $config['source_image'] =  $this->upload->data('full_path');
+                    $config['maintain_ratio'] = TRUE;
+                    $config['width']         = 450;
+                    $config['height']       = 450;
+                    
+                    $this->load->library('image_lib', $config);
+                    
+                    if ( ! $this->image_lib->resize())
+                    {
+                        var_dump($this->image_lib->display_errors());
+                    }
+                }
+
+                $data = array(
+                    'StartDate' => $this->input->post('StartDate',TRUE),
+                    'EndDate' => $this->input->post('EndDate',TRUE),
+                    'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
+                    'PromotionName' => $this->input->post('PromotionName',TRUE),
+                    'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
+                    'TypePromotion' => $this->input->post('TypePromotion',TRUE),
+                    'ImagePath' => $this->upload->data('file_name')
+                );
+    
+                $this->Promotion_model->update($this->input->post('PromotionID', TRUE), $data);
+            }else{
+                $data = array(
+                    'StartDate' => $this->input->post('StartDate',TRUE),
+                    'EndDate' => $this->input->post('EndDate',TRUE),
+                    'PromotionDetail' => $this->input->post('PromotionDetail',TRUE),
+                    'PromotionName' => $this->input->post('PromotionName',TRUE),
+                    'UnitOfDiscount' => $this->input->post('UnitOfDiscount',TRUE),
+                    'TypePromotion' => $this->input->post('TypePromotion',TRUE),
+                );
+    
+                $this->Promotion_model->update($this->input->post('PromotionID', TRUE), $data);
+            }
+
+            foreach($this->input->post('promotionproduct') as $productID){
+                $ppData = array(
+                    'ProductID'=>$productID,
+                    'PromotionID'=>$promotion_id
+                );
+
+                $this->Promotionproduct_model->insert($ppData);
+            }
+
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('promotion'));
         }
@@ -201,7 +308,7 @@ class Promotion extends CI_Controller
 	$this->form_validation->set_rules('PromotionName', 'promotionname', 'trim|required');
 	$this->form_validation->set_rules('UnitOfDiscount', 'unitofdiscount', 'trim|required');
 	$this->form_validation->set_rules('TypePromotion', 'typepromotion', 'trim|required');
-	$this->form_validation->set_rules('promotionproduct', 'promotionproduct', 'required');
+	$this->form_validation->set_rules('promotionproduct[]', 'promotionproduct', 'required');
 
 	$this->form_validation->set_rules('PromotionID', 'PromotionID', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');

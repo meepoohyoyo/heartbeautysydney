@@ -22,6 +22,15 @@ class Promotion_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
+    function get_all_active()
+    {
+        $today = date('Y-m-d');
+        $this->db->where('StartDate <=', $today);
+        $this->db->or_where('EndDate >=', $today);
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+
     // get data by id
     function get_by_id($id)
     {
@@ -60,6 +69,9 @@ class Promotion_model extends CI_Model
     function insert($data)
     {
         $this->db->insert($this->table, $data);
+        $insert_id = $this->db->insert_id();
+        
+        return  $insert_id;
     }
 
     // update data

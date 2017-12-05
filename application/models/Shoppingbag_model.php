@@ -112,6 +112,12 @@ class Shoppingbag_model extends CI_Model
         $this->db->delete($this->table);
     }
 
+    function deleteAllPromotion($PromotionID, $CustomerID){
+        $this->db->where("PromotionID", $PromotionID);
+        $this->db->where("CustomerID", $CustomerID);
+        $this->db->delete($this->table);
+    }
+
 }
 
 /* End of file Shoppingbag_model.php */
