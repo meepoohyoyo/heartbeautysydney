@@ -41,7 +41,7 @@
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'pdf'
+                    'excel'
                 ]
             });
         })

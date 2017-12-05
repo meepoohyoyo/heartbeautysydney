@@ -15,7 +15,7 @@
           <?php foreach($orders as $row){ ?>
           <tr>
           <td><?php echo $row->GenerateNo; ?></td>
-          <td><?php echo $row->OrderDate; ?></td>
+          <td><?php echo date("d-m-Y",strtotime($row->OrderDate)); ?></td>
           <td><?php echo getThaiOrder($row->OrderStatus); ?></td>
           </tr>
         <?php } ?>
